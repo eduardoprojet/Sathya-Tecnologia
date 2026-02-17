@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sathya Tecnología | Monitoramento Inteligente</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --dark: #1e293b;
+            --light: #f8fafc;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background-color: var(--light);
+            color: var(--dark);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        h1 { font-size: 1.5rem; margin-bottom: 1rem; color: var(--primary); text-align: center; }
+        p { text-align: center; color: #64748b; margin-bottom: 2rem; }
+        .form-group { margin-bottom: 1rem; }
+        label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
+        input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        button:hover { background-color: #1d4ed8; }
+        .footer { margin-top: 2rem; font-size: 0.875rem; color: #94a3b8; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Sathya Tecnología</h1>
+        <p>Inscreva-se para o pré-lançamento de nossa plataforma de monitoramento IoT.</p>
+        
+        <form id="leadForm">
+            <div class="form-group">
+                <label for="name">Nome</label>
+                <input type="text" id="name" name="name" placeholder="Seu nome" required>
+            </div>
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <input type="email" id="email" name="email" placeholder="seu@email.com" required>
+            </div>
+            <button type="submit">Quero saber mais</button>
+        </form>
+        <div id="responseMessage" style="margin-top: 1rem; text-align: center; display: none;"></div>
+    </div>
+
+    <div class="footer">
+        &copy; 2026 Sathya Tecnología. Todos os direitos reservados.
+    </div>
+
+    <script>
+        document.getElementById('leadForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                timestamp: new Date().toISOString()
+            };
+
+            const responseMsg = document.getElementById('responseMessage');
+            responseMsg.style.display = 'block';
+            responseMsg.innerText = 'Enviando...';
+
+            try {
+                const response = await fetch('/api/webhook', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+
+                if (response.ok) {
+                    responseMsg.style.color = 'green';
+                    responseMsg.innerText = 'Sucesso! Entraremos em contato.';
+                    e.target.reset();
+                } else {
+                    throw new Error();
+                }
+            } catch (err) {
+                responseMsg.style.color = 'red';
+                responseMsg.innerText = 'Erro ao enviar. Tente novamente.';
+            }
+        });
+    </script>
+</body>
+</html>
