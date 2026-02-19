@@ -1,0 +1,10 @@
+# Padrão: o Eduardo revisa tudo
+* @eduardoprojet
+
+# Itens críticos (exemplos, ajuste conforme o repositório)
+/.github/** @eduardoprojet
+/.env @eduardoprojet
+/openclaw.json @eduardoprojet
+/AGENTS.md @eduardoprojet
+/SOUL*.md @eduardoprojet
+/memory/MEMORY.md @eduardoprojet
